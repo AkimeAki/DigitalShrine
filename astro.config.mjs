@@ -1,5 +1,4 @@
 import { defineConfig } from "astro/config";
-import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
 import { localPort, site } from "./src/define";
@@ -29,6 +28,5 @@ export default defineConfig({
 			}
 		}
 	},
-	output: "static",
-	adapter: cloudflare()
+	output: "static"
 });
