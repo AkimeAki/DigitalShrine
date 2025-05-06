@@ -1,0 +1,29 @@
+---
+import BaseLayout, { type Props as BaseProps } from "@/layouts/BaseLayout.astro";
+
+export interface Props extends BaseProps {}
+const { ...restProps } = Astro.props;
+---
+
+<BaseLayout {...restProps}>
+	<slot />
+</BaseLayout>
+
+<style>
+	body {
+		background-image: radial-gradient(rgb(17, 49, 31), #06120b);
+	}
+</style>
+
+<script>
+	if (location.pathname !== "/") {
+		if (!document.referrer || document.referrer === "") {
+			location.href = "/";
+		}
+
+		const url = new URL(document.referrer);
+		if (url.pathname !== "/") {
+			location.href = "/";
+		}
+	}
+</script>

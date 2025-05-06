@@ -1,5 +1,50 @@
 ---
-import DefaultLayout from "@/layouts/DefaultLayout.astro";
+import ShrineLayout from "@/layouts/ShrineLayout.astro";
+import { css } from "@/styled-system/css";
+import logo from "@/assets/logo.png";
+import { Image } from "astro:assets";
 ---
 
-<DefaultLayout />
+<ShrineLayout>
+	<div
+		class={css`
+			width: 100%;
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		`}
+	>
+		<div
+			class={css`
+				position: relative;
+				width: 320px;
+				height: 320px;
+			`}
+		>
+			<Image
+				src={logo}
+				alt="鳥居"
+				class={css`
+					image-rendering: pixelated;
+					width: 100%;
+					height: 100%;
+				`}
+			/>
+			<a
+				href="/shrine"
+				rel="referrer"
+				class={css`
+					display: block;
+					position: absolute;
+					top: calc(50% + 30px);
+					left: 50%;
+					transform: translate(-50%, -50%);
+					color: white;
+				`}
+			>
+				参拝する
+			</a>
+		</div>
+	</div>
+</ShrineLayout>
