@@ -1,0 +1,15 @@
+/node_modules/
+bun.lockb
+*.ico
+*.txt
+*.png
+*.ttf
+.editorconfig
+Makefile
+_redirects
+/public/**/*
+*.jpg
+*.jpeg
+.npmrc
+*.excalidraw
+.husky/**/*

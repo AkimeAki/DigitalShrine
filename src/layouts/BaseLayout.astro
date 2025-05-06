@@ -1,0 +1,98 @@
+---
+import "@akimeaki/reset-css";
+import "@/global.scss";
+import "@/panda.css";
+import { localPort, site } from "@/define";
+
+export interface Props {
+	title?: string;
+	description?: string;
+	ogType?: string;
+	ogImage?: string;
+	notFound?: boolean;
+	canonical?: string;
+	jsonld?: unknown[];
+	noindex?: boolean;
+}
+
+const path = Astro.url.pathname.replace(/^\//, "").replace(/\.html$/, "");
+const AstroSite = import.meta.env.DEV ? `http://localhost:${localPort}` : `${site}`;
+
+const {
+	title,
+	description = "デジタル神社",
+	ogType = "website",
+	ogImage = `${AstroSite}/default-ogp.png`,
+	notFound = false,
+	canonical = `${AstroSite}/${path}`,
+	jsonld = [],
+	noindex = false
+} = Astro.props;
+
+const serviceTitle = "デジタル神社";
+const pageTitle = title === undefined ? serviceTitle : `${title} - ${serviceTitle}`;
+
+const schema = [
+	{
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		name: serviceTitle,
+		alternateName: serviceTitle,
+		description,
+		url: String(AstroSite),
+		publisher: {
+			"@type": "Organization",
+			name: serviceTitle,
+			url: String(AstroSite),
+			logo: {
+				"@type": "ImageObject",
+				url: `${AstroSite}/default-ogp.png`,
+				width: 320,
+				height: 320
+			}
+		},
+		image: {
+			"@type": "ImageObject",
+			url: `${AstroSite}/default-ogp.png`,
+			width: 320,
+			height: 320
+		}
+	},
+	...jsonld
+];
+---
+
+<html lang="ja">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content={description} />
+		<meta name="format-detection" content="email=no,telephone=no,address=no" />
+		<meta name="author" content="篝之鼠" />
+		<meta name="generator" content={Astro.generator} />
+		<meta property="og:url" content={`${AstroSite}/${path}`} />
+		<meta property="og:type" content={ogType} />
+		<meta property="og:title" content={title ?? serviceTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:site_name" content={serviceTitle} />
+		<meta property="og:image" content={ogImage} />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content={title ?? serviceTitle} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
+		{(notFound || noindex) && <meta name="robots" content="noindex" />}
+		<meta name="robots" content="noindex" />
+		<link rel="icon" href={`${AstroSite}/favicon.ico`} />
+		<link rel="sitemap" href={`${AstroSite}/sitemap-index.xml`} />
+		{
+			schema.map((item) => {
+				return <script type="application/ld+json" is:inline set:html={JSON.stringify(item)} />;
+			})
+		}
+		<title>{pageTitle}</title>
+		{!notFound && <link rel="canonical" href={canonical} />}
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>
