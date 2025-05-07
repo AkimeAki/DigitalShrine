@@ -7,7 +7,6 @@ bun.lockb
 .editorconfig
 Makefile
 _redirects
-/public/**/*
 *.jpg
 *.jpeg
 .npmrc

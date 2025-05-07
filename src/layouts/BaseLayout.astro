@@ -91,6 +91,8 @@ const schema = [
 		}
 		<title>{pageTitle}</title>
 		{!notFound && <link rel="canonical" href={canonical} />}
+		<link rel="manifest" href={`${AstroSite}/manifest.json`} crossorigin="use-credentials" />
+		<slot name="head" />
 	</head>
 	<body>
 		<slot />

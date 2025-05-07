@@ -6,12 +6,15 @@ const { ...restProps } = Astro.props;
 ---
 
 <BaseLayout {...restProps}>
+	<Fragment slot="head">
+		<meta name="theme-color" content="#06120b" />
+	</Fragment>
 	<slot />
 </BaseLayout>
 
 <style>
 	body {
-		background-image: radial-gradient(rgb(17, 49, 31), #06120b);
+		background-image: radial-gradient(#11311f, #06120b);
 	}
 </style>
 
