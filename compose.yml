@@ -1,7 +1,6 @@
 volumes:
   node_modules:
 
-
 services:
   app:
     build:
